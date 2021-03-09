@@ -5,10 +5,15 @@
   }
   
   #title {
-    font-family: fantasy;
-    font-size: 140%;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 120%;
     text-transform: capitalize;
     margin: 2rem 0 0 1rem;
+  }
+  
+  #numberOfMovies {
+    color: red;
+    font-size: 140%;
   }
   
   table {

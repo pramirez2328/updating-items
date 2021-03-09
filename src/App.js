@@ -12,28 +12,40 @@ class App extends React.Component {
 	constructor(props){
 		super(props)
 		this.state = {
+			moviesInStock : movies.length,
 			inventary : movies
 		}
-	//	this.handleUpdatingTheNumber = this.handleUpdatingTheNumber.bind(this);
-		this.handleDelete = this.handleDelete.bind(this);
+
+		this.handleDeletingMovie = this.handleDeletingMovie.bind(this);
 	};
 
-	handleDelete (id) {
-		console.log(id);
 
+	handleDeletingMovie (id) {
+
+		let index = movies.map(obj => obj._id).indexOf(id);
+
+		movies.forEach( movie => {
+			if (movie._id === id) {
+				if(movie.numberInStock === 1){
+					movies.splice(index, 1);
+				} else {
+           movie.numberInStock -= 1;
+				}
+			}
+		})
+
+    this.setState({
+			moviesInStock : movies.length,
+      inventary: movies
+		});
 	}
-	// handleUpdatingTheNumber () {
-	// 	this.setState({
-	// 		numberOfMovies: this.state.numberOfMovies - 1
-	// 	})
-	// }
 
 	render(){
     return (
       <div id="container">
         <div id="topInfo">
           <StoreLogo />
-          <TitleComponent />
+          <TitleComponent numberOfMovies = {this.state.moviesInStock}/>
         </div>
         <table className="table table-hover">
           <TableHead />
@@ -48,7 +60,7 @@ class App extends React.Component {
                   <td>
                     <button
                       className="btn btn-success"
-                      onClick={() => this.handleDelete(movie._id)}
+                      onClick={() => this.handleDeletingMovie(movie._id)}
                     >
                       Rent
                     </button>
