@@ -1,0 +1,59 @@
+  #container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  #title {
+    font-family: fantasy;
+    font-size: 140%;
+    text-transform: capitalize;
+    margin: 2rem 0 0 1rem;
+  }
+  
+  table {
+    margin: auto;
+  }
+  
+  thead {
+    color: red;
+  }
+  
+  tbody {
+    border: 1px solid red;
+    color: white;
+    text-align: center;
+  }
+  
+  tr {
+    background-color: rgb(3, 3, 3);
+  }
+  
+  #topInfo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: fit-content;
+  }
+  
+  #logo {
+    display: flex;
+    justify-content: center;
+  }
+  
+  img {
+    width: 80%;
+    height: 40%;
+  }
+  
+  h6 {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: small;
+  }
+  
+  @media only screen and (min-width: 600px) {
+    img {
+      width: 30%;
+      height: 20%;
+    }
+  }
