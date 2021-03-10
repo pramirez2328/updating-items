@@ -5,6 +5,7 @@ import './App.css';
 import TitleComponent from './title';
 import TableHead from './tableHead';
 import StoreLogo from './StoreLogo';
+import RowMovie from './RowMovie';
 
 
 
@@ -16,11 +17,11 @@ class App extends React.Component {
 			inventary : movies
 		}
 
-		this.handleDeletingMovie = this.handleDeletingMovie.bind(this);
+		this.handleDeleting = this.handleDeleting.bind(this);
 	};
 
 
-	handleDeletingMovie (id) {
+	handleDeleting (id) {
 
 		let index = movies.map(obj => obj._id).indexOf(id);
 
@@ -49,26 +50,7 @@ class App extends React.Component {
         </div>
         <table className="table table-hover">
           <TableHead />
-          <tbody>
-            {movies.map((movie) => {
-              return (
-                <tr key={movie._id}>
-                  <th scope="row">{movie.title}</th>
-                  <td>{movie.genre.name}</td>
-                  <td>{movie.numberInStock}</td>
-                  <td>{movie.dailyRentalRate}</td>
-                  <td>
-                    <button
-                      className="btn btn-success"
-                      onClick={() => this.handleDeletingMovie(movie._id)}
-                    >
-                      Rent
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
+          <RowMovie key={movies._id} onDelete={this.handleDeleting} />
         </table>
 				<h6 className="text-center">proudly created by Pedro Ramirez</h6>
       </div>
