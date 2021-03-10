@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {movies} from './services/fakeMovieService';
 class RowMovie extends Component {
-	state = {  }
+
 	render() {
 		return (
       <tbody>

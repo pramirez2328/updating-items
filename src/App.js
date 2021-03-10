@@ -8,7 +8,6 @@ import StoreLogo from './StoreLogo';
 import RowMovie from './RowMovie';
 
 
-
 class App extends React.Component {
 	constructor(props){
 		super(props)
@@ -46,13 +45,17 @@ class App extends React.Component {
       <div id="container">
         <div id="topInfo">
           <StoreLogo />
-          <TitleComponent numberOfMovies = {this.state.moviesInStock}/>
+          <TitleComponent numberOfMovies={this.state.moviesInStock} />
         </div>
+
         <table className="table table-hover">
           <TableHead />
           <RowMovie key={movies._id} onDelete={this.handleDeleting} />
         </table>
-				<h6 className="text-center">proudly created by Pedro Ramirez</h6>
+
+        <h6 id="footer" className="text-center">
+          {"\u00A9"} Proudly created by <span id="myName">Pedro Ramirez</span>{" "}
+        </h6>
       </div>
     );
   }
