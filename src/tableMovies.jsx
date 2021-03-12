@@ -1,18 +1,17 @@
 import React, { Fragment } from 'react';
 import TableHead from './tableHead';
 import PopularMovie from './popularMovie';
-import { functPagination } from "./util/funcToPagination";
-import { numberOfMoviesPerPage} from './App'
 
-const  TableMovies  = ({ inventary, pagesDisplaying, onDelete, onReturn,liked }) => {
-	let arrOfMovies = functPagination(inventary, pagesDisplaying, numberOfMoviesPerPage);
-	console.log(arrOfMovies);
+
+
+const  TableMovies  = ({ inventary, onDelete, onReturn,liked }) => {
+
 	return (
         <Fragment>
           <TableHead />
           <tbody>
-            {arrOfMovies.map((movie) => {
-							
+            {inventary.map((movie) => {
+
               return (
                   <tr key={movie._id}>
                     <th scope="row">{movie.title}</th>

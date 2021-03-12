@@ -7,6 +7,7 @@ import StoreLogo from './storeLogo';
 import TableMovies from './tableMovies';
 import Footer from './footer';
 import Pagination from './pagination';
+import { funcPagination } from "./util/funcToPagination";
 
 
 const initialStock = movies.map(value => {
@@ -14,7 +15,9 @@ const initialStock = movies.map(value => {
  return obj
 })
 
-export const numberOfMoviesPerPage = 4;
+const numberOfMoviesPerPage = 4;
+let numberOfPages = Math.ceil(movies.length/numberOfMoviesPerPage);
+let arrOfMovies = funcPagination(movies, numberOfPages, numberOfMoviesPerPage);
 
 //Main class collecting several components
 class App extends Component {
@@ -23,8 +26,9 @@ class App extends Component {
 		this.state = {
       moviesInStock: movies.length,
       inventary: movies,
-      pagesDisplay: Math.ceil(movies.length/numberOfMoviesPerPage),
-			moviesPerPage: numberOfMoviesPerPage
+      buttonsDisplay: numberOfPages,
+			moviesPerPage: numberOfMoviesPerPage,
+			pageDisplaying: arrOfMovies.page1
     };
 		this.handleDeleting = this.handleDeleting.bind(this);
 	};
@@ -46,7 +50,7 @@ class App extends Component {
     this.setState({
 			moviesInStock : movies.length,
       inventary: movies,
-			pagesDisplay: Math.ceil(movies.length/numberOfMoviesPerPage)
+			buttonsDisplay: Math.ceil(movies.length/numberOfMoviesPerPage)
 		});
 	}
 
@@ -84,8 +88,12 @@ class App extends Component {
       });
 	}
 
-	handlePages = (pageNumber) => {
-		console.log(pageNumber);
+	handlePages = (inventory, pageNumber) => {
+	  this.setState(
+			{
+			 pageDisplaying:inventory[`page${pageNumber}`]
+			}
+		)
 	}
 
 	render() {
@@ -101,13 +109,13 @@ class App extends Component {
           <table className="table table-hover">
             <TableMovies
 						  key={movies._id}
-						  inventary={this.state.inventary}
-						  pagesDisplaying = {this.state.pagesDisplay}
+						  inventary={this.state.pageDisplaying}
 						  onDelete={this.handleDeleting}
-						  onReturn={this.handleReturn} liked={this.handleLikes}/>
+						  onReturn={this.handleReturn}
+							liked={this.handleLikes}/>
           </table>
 
-					<Pagination  pages = {this.state.pagesDisplay} onPages = {this.handlePages}/>
+					<Pagination inventory={arrOfMovies} pages = {this.state.buttonsDisplay} onPages = {this.handlePages}/>
           <Footer />
         </div>
       </div>

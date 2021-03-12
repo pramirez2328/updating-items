@@ -1,4 +1,4 @@
-export function functPagination( arr, pageNumber, moviesPerPage ) {
+export function funcPagination( arr, pageNumber, moviesPerPage ) {
   //page number = is the number of buttons or pages displayed
   //moviesPerPage = is the number of movies displayed per page
 

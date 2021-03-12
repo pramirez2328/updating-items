@@ -1,7 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 
-const Pagination = ({pages, onPages}) => {
+const Pagination = ({inventory, pages, onPages}) => {
 
 	if (pages ===  1) {
 		return null;
@@ -13,8 +13,8 @@ const Pagination = ({pages, onPages}) => {
       <ul className="pagination">
 				{totalPages.map(page => {
 	        return (
-            <li key={page} className="page-item">
-              <a className="page-link" href="#content" onClick={() => onPages(page)}>
+            <li key={page} className="page-item active">
+              <a className="page-link" href="#content" onClick={() => onPages(inventory, page)}>
                 {page}
               </a>
             </li>
