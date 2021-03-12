@@ -1,17 +1,16 @@
-import React, { Component } from 'react';
+import React, {Fragment} from 'react';
 import logo from './logo.png';
-class StoreLogo extends Component {
 
-	render() {
-		return (
-      <div id="logo">
+const StoreLogo = () => {
+	return (
+	    <Fragment >
         <img
+				  id="logo"
           src={logo}
           alt="logo"
         />
-      </div>
-    );
-	}
+      </Fragment>
+	);
 }
 
 export default StoreLogo;
