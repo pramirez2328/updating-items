@@ -9,14 +9,20 @@ import Footer from './footer';
 import Pagination from './pagination';
 import { funcPagination } from "./util/funcToPagination";
 
-
-const initialStock = movies.map(value => {
+//setting the initial number(in stock) of movies of the same title
+let initialStock = movies.map(value => {
 	let obj = {id:value._id, initialStock:value.numberInStock};
- return obj
-})
+  return obj
+});
 
+// number of movies per page
 const numberOfMoviesPerPage = 4;
+//variable to initate the constructor
+let currentMovies = movies.length;
+//variable to calculate the number of button needed
 let numberOfPages = Math.ceil(movies.length/numberOfMoviesPerPage);
+//external function to allocate the movies in several objects,
+//depending on the length of the database, one object per page
 let arrOfMovies = funcPagination(movies, numberOfPages, numberOfMoviesPerPage);
 
 //Main class collecting several components
@@ -24,36 +30,39 @@ class App extends Component {
 	constructor(props){
 		super(props)
 		this.state = {
-      moviesInStock: movies.length,
+			availableMovies : currentMovies,
       inventary: movies,
-      buttonsDisplay: numberOfPages,
 			moviesPerPage: numberOfMoviesPerPage,
 			pageDisplaying: arrOfMovies.page1
     };
 		this.handleDeleting = this.handleDeleting.bind(this);
 	};
 
-
+// updating the movies in stock(subtracting)
 	handleDeleting (id) {
-		let index = movies.map(obj => obj._id).indexOf(id);
-
-		movies.forEach( movie => {
-			if (movie._id === id) {
-				if(movie.numberInStock === 1){
-					movies.splice(index, 1);
-				} else {
-           movie.numberInStock -= 1;
-				}
-			}
-		})
+      movies.forEach((movie) => {
+        if (movie._id === id) {
+          if (movie.numberInStock === 0){
+            alert("Currently this movie title is not avilable");
+          } else if (movie.numberInStock === 1) {
+					  if(movie.liked === false) {
+              movie.liked = true;
+						}
+						currentMovies -= 1;
+						movie.numberInStock -= 1;
+					} else {
+            movie.numberInStock -= 1;
+          }
+        }
+      });
 
     this.setState({
-			moviesInStock : movies.length,
-      inventary: movies,
-			buttonsDisplay: Math.ceil(movies.length/numberOfMoviesPerPage)
+			inventary : movies,
+      availableMovies : currentMovies
 		});
 	}
 
+//updating the movies in stock (adding)
 	handleReturn = (id) => {
 	let initalQuantity=	initialStock.find(value => {
 		return value.id === id;
@@ -61,9 +70,16 @@ class App extends Component {
 	);
 		movies.forEach((movie) => {
       if (movie._id === id) {
-				if (movie.numberInStock === initalQuantity.initialStock){
-					alert('You are trying to add the same movie again! \n' +
-					'The movie is already in the database!');
+				if (movie.numberInStock === 0) {
+          movie.numberInStock += 1;
+					currentMovies += 1;
+        }
+				else if (movie.numberInStock === initalQuantity.initialStock){
+				  if (movie.liked  === true) {
+						movie.liked = false;
+					}
+					alert(`You Are Trying To Add The Same Movie Again!
+This Movie Is Already In The Database!`);
 				} else {
          movie.numberInStock += 1;
 				}
@@ -72,22 +88,25 @@ class App extends Component {
     });
 
 		this.setState({
-       inventary: movies
+      inventary: movies,
+      availableMovies : currentMovies,
     });
 	}
 
+// toggling the heart shape figure
 	handleLikes = (id) =>{
 			movies.forEach((objMovie) => {
         if (objMovie._id === id) {
-          objMovie.liked = true;
+          objMovie.liked === false ? objMovie.liked = true : objMovie.liked = false;
         }
       });
 
       this.setState({
-        inventary: movies,
+        inventary: movies
       });
 	}
 
+// diplaying the number of movies per page
 	handlePages = (inventory, pageNumber) => {
 	  this.setState(
 			{
@@ -97,15 +116,16 @@ class App extends Component {
 	}
 
 	render() {
-
     return (
       <div id="container">
         <div id="content">
+					{/* header components */}
           <div id="topInfo">
             <StoreLogo />
-            <TitleComponent numberOfMovies={this.state.moviesInStock} />
+            <TitleComponent numberOfMovies={this.state.availableMovies} />
           </div>
 
+          {/* content Component */}
           <table className="table table-hover">
             <TableMovies
 						  key={movies._id}
@@ -115,7 +135,10 @@ class App extends Component {
 							liked={this.handleLikes}/>
           </table>
 
-					<Pagination inventory={arrOfMovies} pages = {this.state.buttonsDisplay} onPages = {this.handlePages}/>
+					{/* interacting buttons */}
+					<Pagination inventory={arrOfMovies} pages = {numberOfPages} onPages = {this.handlePages} pageDisplaying={this.state.pageDisplaying} />
+
+					{/* simple footer with my name */}
           <Footer />
         </div>
       </div>
