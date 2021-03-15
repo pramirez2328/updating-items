@@ -16,7 +16,7 @@ const Pagination = ({inventory, pages, onPages, pageDisplaying}) => {
 
   let totalPages = _.range(1, pages + 1);
 	return (
-    <nav aria-label="...">
+    <nav aria-label="..." id="pageButtons">
       <ul className="pagination">
 				{totalPages.map(page => {
 					let conditionClass = activeClass === `page${page}` ? "page-item active" :  "page-item";

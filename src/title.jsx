@@ -8,7 +8,7 @@ const TitleComponet = ({numberOfMovies}) => {
           <span id="numberOfMovies">
 						{ numberOfMovies }
 					</span> {' '}
-					movies in the store
+					movie titles in the database
         </h1>
       </Fragment> );
 }

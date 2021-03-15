@@ -16,7 +16,7 @@ let initialStock = movies.map(value => {
 });
 
 // number of movies per page
-const numberOfMoviesPerPage = 4;
+const numberOfMoviesPerPage = 5;
 //variable to initate the constructor
 let currentMovies = movies.length;
 //variable to calculate the number of button needed
@@ -68,21 +68,23 @@ class App extends Component {
 		return value.id === id;
 		}
 	);
+	console.log(initalQuantity);
 		movies.forEach((movie) => {
       if (movie._id === id) {
 				if (movie.numberInStock === 0) {
           movie.numberInStock += 1;
-					currentMovies += 1;
-        }
-				else if (movie.numberInStock === initalQuantity.initialStock){
-				  if (movie.liked  === true) {
-						movie.liked = false;
-					}
-					alert(`You Are Trying To Add The Same Movie Again!
+          currentMovies += 1;
+        } else if (movie.numberInStock === (initalQuantity.initialStock - 1)) {
+					  movie.numberInStock += 1;
+          if (movie.liked === true) {
+            movie.liked = false;
+          }
+        } else if (movie.numberInStock === initalQuantity.initialStock) {
+          alert(`You Are Trying To Add The Same Movie Again!
 This Movie Is Already In The Database!`);
-				} else {
-         movie.numberInStock += 1;
-				}
+        } else {
+          movie.numberInStock += 1;
+        }
 
       }
     });
@@ -119,26 +121,31 @@ This Movie Is Already In The Database!`);
     return (
       <div id="container">
         <div id="content">
-					{/* header components */}
+          {/* header components */}
           <div id="topInfo">
             <StoreLogo />
             <TitleComponent numberOfMovies={this.state.availableMovies} />
           </div>
-
           {/* content Component */}
-          <table className="table table-hover">
-            <TableMovies
-						  key={movies._id}
-						  inventary={this.state.pageDisplaying}
-						  onDelete={this.handleDeleting}
-						  onReturn={this.handleReturn}
-							liked={this.handleLikes}/>
-          </table>
-
-					{/* interacting buttons */}
-					<Pagination inventory={arrOfMovies} pages = {numberOfPages} onPages = {this.handlePages} pageDisplaying={this.state.pageDisplaying} />
-
-					{/* simple footer with my name */}
+          <div id="main">
+            <table className=" table table-hover">
+              <TableMovies
+                key={movies._id}
+                inventary={this.state.pageDisplaying}
+                onDelete={this.handleDeleting}
+                onReturn={this.handleReturn}
+                liked={this.handleLikes}
+              />
+            </table>
+          </div>
+          {/* interacting buttons */}
+          <Pagination
+            inventory={arrOfMovies}
+            pages={numberOfPages}
+            onPages={this.handlePages}
+            pageDisplaying={this.state.pageDisplaying}
+          />
+          {/* simple footer with my name */}
           <Footer />
         </div>
       </div>

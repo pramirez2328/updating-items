@@ -1,3 +1,7 @@
+#container {
+  width: auto;
+}
+
 #content {
   width: 80%;
   margin: auto;
@@ -8,13 +12,25 @@
   flex-flow: wrap;
   justify-content: space-around;
   align-items: center;
-  margin: 1.5em;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+  border-bottom: 4px solid blue;
+  border-top: 4px solid blue;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 #title {
   font-family: 'Times New Roman', Times, serif;
   font-size: 120%;
   text-transform: capitalize;
+}
+
+#main {
+  display: inline;
+  width: 100%;
+  overflow-x: scroll;
 }
 
 #numberOfMovies {
@@ -24,6 +40,7 @@
 thead#headTable {
   color: blue;
   border: 3px solid #075bf8;
+  width: 100%;
 }
 
 tbody {
@@ -56,17 +73,5 @@ h6#footer {
   img {
     width: 60%;
     height: 40%;
-  }
-}
-
-@media only screen and (max-width: 400px) {
-  #content {
-    width: fit-content;
-    margin: auto;
-  }
-  #topInfo {
-    justify-content: center;
-    align-items: center;
-    margin: 1.5em;
   }
 }
